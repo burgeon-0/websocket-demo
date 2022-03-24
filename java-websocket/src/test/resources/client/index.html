@@ -1,0 +1,67 @@
+<html>
+<head>
+    <title>WebSocket Client</title>
+</head>
+
+<body>
+<div>
+    <input id="msg-input"/>
+    <button id="send-button">Send</button>
+</div>
+<div id="msg-panel">
+</div>
+
+<script>
+    const max = 1000000000;
+    const min = 100000000;
+    const username = '' + Math.floor(Math.random() * (max - min) + min);
+
+    // Create WebSocket connection.
+    const socket = new WebSocket('ws://localhost:8080/chat/' + username);
+
+    // Connection opened
+    socket.onopen = function (event) {
+        console.log('WebSocket is open now.');
+    };
+
+    // Connection closed
+    socket.onclose = function (event) {
+        console.log('WebSocket is closed now.');
+    };
+
+    // Error observed
+    socket.onerror = function (event) {
+        console.error('WebSocket error observed:', event);
+    };
+
+    // Listen for messages
+    socket.addEventListener('message', function (event) {
+        showMessage(event.data);
+    });
+
+    function showMessage(json) {
+        console.log('Show message: ' + json);
+
+        let data = JSON.parse(json);
+        let panel = document.getElementById("msg-panel");
+        let p = document.createElement("p");
+        p.innerText = data.from + ": " + data.content;
+        panel.appendChild(p);
+    };
+
+    let sentButton = document.getElementById("send-button");
+    sentButton.onclick = function (event) {
+        sendMessage();
+    };
+
+    function sendMessage() {
+        let msgInput = document.getElementById("msg-input");
+        let msg = msgInput.value;
+        socket.send(JSON.stringify({
+            "from": username,
+            "content": msg
+        }));
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Demo Chat</title>
+    <link href="css/index.css" rel="stylesheet">
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/socket.io/socket.io.js"></script>
+
+    <script>
+
+        var socket = io.connect('ws://localhost:9092', {transports: ["websocket"]});
+        // 监听连接事件
+        socket.on('connect', function () {
+            output('<span class="connect-msg">Client has connected to the server!</span>');
+        });
+        // 监听断开连接事件
+        socket.on('disconnect', function () {
+            output('<span class="disconnect-msg">The client has disconnected!</span>');
+        });
+        // 监听自定义事件
+        socket.on('broadcast', function (data) {
+            output('<span style="color: ' + data.color + ';">' + data.userName + ':</span> ' + data.message);
+        });
+
+        function output(message) {
+            var currentTime = "<span class='time'>" + moment().format('HH:mm:ss.SSS') + "</span>";
+            var element = $("<div>" + currentTime + " " + message + "</div>");
+            $('#console').append(element);
+        }
+
+        var colors = ['#B8860B',
+            '#FF7F50',
+            '#DC143C',
+            '#483D8B',
+            '#5F9EA0',
+            '#2F4F4F'];
+        var color = colors[Math.floor((Math.random() * colors.length))];
+        var userName = 'user' + Math.floor((Math.random() * 1000));
+
+        function sendMessage() {
+            var message = $('#msg').val();
+            $('#msg').val('');
+
+            var jsonObject = {
+                color: color,
+                userName: userName,
+                message: message
+            };
+            socket.emit('message', jsonObject);
+        }
+
+        function disconnect() {
+            socket.disconnect();
+        }
+
+        $(document).keydown(function (e) {
+            if (e.keyCode == 13) {
+                $('#send').click();
+            }
+        });
+    </script>
+</head>
+
+<body>
+<h1>Netty-socketio Demo Chat</h1>
+<br/>
+<div id="console" class="well">
+</div>
+<form class="well form-inline" onsubmit="return false;">
+    <input id="msg" class="input-xlarge" type="text" placeholder="Type something..."/>
+    <button type="button" onClick="sendMessage()" class="btn" id="send">Send</button>
+    <button type="button" onClick="disconnect()" class="btn">Disconnect</button>
+</form>
+</body>
+
+</html>

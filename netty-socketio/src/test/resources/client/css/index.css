@@ -1,0 +1,24 @@
+body {
+    padding: 20px;
+}
+
+#console {
+    height: 400px;
+    overflow: auto;
+}
+
+.connect-msg {
+    color: green;
+}
+
+.disconnect-msg {
+    color: red;
+}
+
+.username-msg {
+    color: orange;
+}
+
+#send-msg {
+    color: #888
+}
