@@ -10,7 +10,7 @@
 
     <script>
 
-        var socket = io.connect('ws://localhost:9092', {transports: ["websocket"]});
+        let socket = io.connect('ws://localhost:9092', {transports: ["websocket"]});
         // 监听连接事件
         socket.on('connect', function () {
             output('<span class="connect-msg">Client has connected to the server!</span>');
@@ -25,25 +25,25 @@
         });
 
         function output(message) {
-            var currentTime = "<span class='time'>" + moment().format('HH:mm:ss.SSS') + "</span>";
-            var element = $("<div>" + currentTime + " " + message + "</div>");
+            let currentTime = "<span class='time'>" + moment().format('HH:mm:ss.SSS') + "</span>";
+            let element = $("<div>" + currentTime + " " + message + "</div>");
             $('#console').append(element);
         }
 
-        var colors = ['#B8860B',
+        let colors = ['#B8860B',
             '#FF7F50',
             '#DC143C',
             '#483D8B',
             '#5F9EA0',
             '#2F4F4F'];
-        var color = colors[Math.floor((Math.random() * colors.length))];
-        var userName = 'user' + Math.floor((Math.random() * 1000));
+        let color = colors[Math.floor((Math.random() * colors.length))];
+        let userName = 'user' + Math.floor((Math.random() * 1000));
 
         function sendMessage() {
-            var message = $('#msg').val();
+            let message = $('#msg').val();
             $('#msg').val('');
 
-            var jsonObject = {
+            let jsonObject = {
                 color: color,
                 userName: userName,
                 message: message
