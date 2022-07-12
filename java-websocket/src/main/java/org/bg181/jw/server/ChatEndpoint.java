@@ -1,4 +1,4 @@
-package org.burgeon.jw.server;
+package org.bg181.jw.server;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

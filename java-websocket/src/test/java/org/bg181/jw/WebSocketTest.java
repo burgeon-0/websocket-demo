@@ -1,4 +1,4 @@
-package org.burgeon.jw;
+package org.bg181.jw;
 
 import cn.hutool.core.util.HexUtil;
 import org.junit.jupiter.api.Test;

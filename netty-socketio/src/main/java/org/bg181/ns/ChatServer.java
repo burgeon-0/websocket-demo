@@ -1,4 +1,4 @@
-package org.burgeon.ns;
+package org.bg181.ns;
 
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOServer;

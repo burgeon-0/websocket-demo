@@ -1,4 +1,4 @@
-package org.burgeon.jw.server;
+package org.bg181.jw.server;
 
 import com.google.gson.Gson;
 import lombok.Data;

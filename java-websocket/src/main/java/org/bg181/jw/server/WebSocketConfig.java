@@ -1,4 +1,4 @@
-package org.burgeon.jw.server;
+package org.bg181.jw.server;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
